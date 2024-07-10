@@ -21,16 +21,18 @@
 //    );
 //  }
 
-const Button = (params) => {
-  // pemecahan paraeter params
-  // children digunakan untuk mengambil value dari tag Button dalam function app()
-  const {children = "...", variant = "bg-black"} = params
-  return (
-    <button className={`py-5 px-20 ${variant} text-white rounded-xl`}>
-      {children}
-    </button>
-  );
-}
+// const Button = (params) => {
+//   // pemecahan paraeter params
+//   // children digunakan untuk mengambil value dari tag Button dalam function app()
+//   const {children = "...", variant = "bg-black"} = params
+//   return (
+//     <button className={`py-5 px-20 ${variant} text-white rounded-xl`}>
+//       {children}
+//     </button>
+//   );
+// }
+
+import Button from "./components/Elements/Button";
 
 function App() {
   return (
@@ -45,3 +47,4 @@ function App() {
 }
 
 export default App;
+
