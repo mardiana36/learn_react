@@ -1,7 +1,7 @@
 const Button = (params) => {
-    const { children = "...", bg="bg-red-700" } = params;
+    const { children = "...", bg="bg-red-700", onClick=()=>{}, type="button"} = params;
     return (
-        <button className= {`${bg} px-10 rounded-xl text-white font-bold`}>
+        <button type={type} onClick={onClick} className= {`${bg} px-10 py-3 rounded-xl text-white font-bold`}>
             {children}
         </button>
     );
