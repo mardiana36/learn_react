@@ -3,7 +3,7 @@ import Button from "../Elements/Button";
 const CardProduct = (params) => {
   const { children } = params;
   return (
-    <div className=" w-full max-w-sm bg-gray-800 border border-gray-700 rounded-lg shadow mx-2 flex flex-col justify-between">
+    <div className=" w-full max-w-sm bg-gray-800 border border-gray-700 rounded-lg shadow mx-2 my-2 flex flex-col justify-between">
       {children}
     </div>
   );
@@ -39,11 +39,11 @@ const Body = (params) => {
 };
 
 const Footer = (params) => {
-    const { price } = params
+    const { price, heandelAddToCart, id} = params
   return (
     <div className="flex items-center justify-between px-5 pb-5">
-          <span className="text-xl font-bold text-white">{ price }</span>
-      <Button bg="bg-blue-700">Add To Cart</Button>
+          <span className="text-xl font-bold text-white">{ price.toLocaleString('id-ID',{style: 'currency', currency: 'IDR'}) }</span>
+      <Button bg="bg-blue-700" onClick={()=>heandelAddToCart(id)}>Add To Cart</Button>
     </div>
   );
 };
