@@ -2,6 +2,7 @@ import Button from "../components/Elements/Button";
 import { useState, useEffect, useRef } from "react";
 import CardProduct from "../components/Fragments/cardProduct";
 import { getProduct } from "../services/product.service";
+import { getUsername } from "../services/auth.service";
 // import Counter from "../components/Fragments/Counter";
 // const products = [
 //   {
@@ -22,12 +23,12 @@ import { getProduct } from "../services/product.service";
 //   },
 // ];
 
-const email = localStorage.getItem("email");
 
 const ProductPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
@@ -38,6 +39,15 @@ const ProductPage = () => {
       setProducts(data);
     });
   }, [])
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setUsername(getUsername(token));
+    } else {
+      window.location.href = "/login";
+    }
+  }, []);
 
   useEffect(() => {
     if (products.length> 0 && cart.length > 0) {
@@ -51,8 +61,7 @@ const ProductPage = () => {
   }, [cart, products]);
 
   const heandelLogout = () => {
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
+    localStorage.removeItem("token");
     window.location.href = "/login";
   };
 
@@ -88,7 +97,7 @@ const ProductPage = () => {
   return (
     <>
       <div className="flex justify-end h-20 bg-blue-700 text-white items-center px-10">
-        {email}
+        {username}
         <Button onClick={heandelLogout} bg="bg-black ml-5">
           Logout
         </Button>
