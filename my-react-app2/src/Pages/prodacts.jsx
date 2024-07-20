@@ -99,7 +99,7 @@ const ProductPage = () => {
         <div className="w-3/4 flex flex-wrap">
           { products.length > 0 && products.map((product) => (
             <CardProduct key={product.id}>
-              <CardProduct.Header image={product.image}></CardProduct.Header>
+              <CardProduct.Header id={product.id} image={product.image}></CardProduct.Header>
               <CardProduct.Body name={product.title}>
                 {product.description}
               </CardProduct.Body>
