@@ -1,8 +1,13 @@
-import Button from "../components/Elements/Button";
-import { useState, useEffect, useRef } from "react";
+// import Button from "../components/Elements/Button";
+// import { useState, useEffect, useRef } from "react";
 import CardProduct from "../components/Fragments/cardProduct";
 import { getProduct } from "../services/product.service";
 import { useLogin } from "../hooks/useLogin";
+import TableCart from "../components/Fragments/TableCart";
+import { useEffect, useState } from "react";
+import Navbar from "../components/Layouts/navbar";
+
+
 // import Counter from "../components/Fragments/Counter";
 // const products = [
 //   {
@@ -25,14 +30,14 @@ import { useLogin } from "../hooks/useLogin";
 
 
 const ProductPage = () => {
-  const [cart, setCart] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  // const [cart, setCart] = useState([]);
+  // const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
-  const username = useLogin();
+ useLogin();
 
-  useEffect(() => {
-    setCart(JSON.parse(localStorage.getItem("cart")) || []);
-  }, []);
+  // useEffect(() => {
+  //   setCart(JSON.parse(localStorage.getItem("cart")) || []);
+  // }, []);
 
   useEffect(() => {
     getProduct((data) => {
@@ -42,33 +47,33 @@ const ProductPage = () => {
 
   
 
-  useEffect(() => {
-    if (products.length> 0 && cart.length > 0) {
-      const sum = cart.reduce((acc, item) => {
-        const product = products.find((product) => product.id === item.id);
-        return acc + product.price * item.qty;
-      }, 0);
-      setTotalPrice(sum);
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
-  }, [cart, products]);
+  // useEffect(() => {
+  //   if (products.length> 0 && cart.length > 0) {
+  //     const sum = cart.reduce((acc, item) => {
+  //       const product = products.find((product) => product.id === item.id);
+  //       return acc + product.price * item.qty;
+  //     }, 0);
+  //     setTotalPrice(sum);
+  //     localStorage.setItem("cart", JSON.stringify(cart));
+  //   }
+  // }, [cart, products]);
 
-  const heandelLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/login";
-  };
+  // const heandelLogout = () => {
+  //   localStorage.removeItem("token");
+  //   window.location.href = "/login";
+  // };
 
-  const heandelAddToCart = (id) => {
-    if (cart.find((item) => item.id === id)) {
-      setCart(
-        cart.map((item) =>
-          item.id === id ? { ...item, qty: item.qty + 1 } : item
-        )
-      );
-    } else {
-      setCart([...cart, { id, qty: 1 }]);
-    }
-  };
+  // const heandelAddToCart = (id) => {
+  //   if (cart.find((item) => item.id === id)) {
+  //     setCart(
+  //       cart.map((item) =>
+  //         item.id === id ? { ...item, qty: item.qty + 1 } : item
+  //       )
+  //     );
+  //   } else {
+  //     setCart([...cart, { id, qty: 1 }]);
+  //   }
+  // };
 
   // useRef
   // const cartRef = useRef(JSON.parse(localStorage.getItem("cart")) || []);
@@ -78,23 +83,18 @@ const ProductPage = () => {
   //   localStorage.setItem("cart", JSON.stringify(cartRef.current));
   // };
 
-  const totalPriceRef = useRef(null);
-  useEffect(() => {
-    if (cart.length > 0) {
-      totalPriceRef.current.style.display = "table-row";
-    } else {
-      totalPriceRef.current.style.display = "none";
+  // const totalPriceRef = useRef(null);
+  // useEffect(() => {
+  //   if (cart.length > 0) {
+  //     totalPriceRef.current.style.display = "table-row";
+  //   } else {
+  //     totalPriceRef.current.style.display = "none";
       
-    }
-  })
+  //   }
+  // })
   return (
     <>
-      <div className="flex justify-end h-20 bg-blue-700 text-white items-center px-10">
-        {username}
-        <Button onClick={heandelLogout} bg="bg-black ml-5">
-          Logout
-        </Button>
-      </div>
+     <Navbar/>
       <div className="flex justify-center py-5 px-5 w-full overflow-x-hidden">
         <div className="w-3/4 flex flex-wrap">
           { products.length > 0 && products.map((product) => (
@@ -105,7 +105,6 @@ const ProductPage = () => {
               </CardProduct.Body>
               <CardProduct.Footer
                 price={product.price}
-                heandelAddToCart={heandelAddToCart}
                 id={product.id}
               />
             </CardProduct>
@@ -113,7 +112,7 @@ const ProductPage = () => {
         </div>
         <div className="w-1/4">
           <h1 className="text-3xl font-bold text-blue-600 ml-5 mb-2">Cart</h1>
-          <table className="text-left table-auto border-separate border-spacing-x-5">
+          {/* <table className="text-left table-auto border-separate border-spacing-x-5">
             <thead>
               <tr>
                 <th>Product</th>
@@ -151,7 +150,8 @@ const ProductPage = () => {
                 <td><b>{ totalPrice.toLocaleString('id-ID',{style: 'currency', currency: 'USD'}) }</b></td>
               </tr>
             </tbody>
-          </table>
+          </table> */}
+          <TableCart products={products} />
         </div>
       </div>
       {/* <div className="mt-5 flex justify-center mb-5">
